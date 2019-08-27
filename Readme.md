@@ -3,7 +3,6 @@
 # OpenEP: an open source electric-thermal simulator for electroporation-based treatments
 
 Over more than a decade, electroporation (EP) based treatments have increased the interest of several scientific and industrial sectors, such as medical, food processing and environmental science. Computational modeling proved to be a fundamental tool for predicting, describing and optimizing these therapies. Unfortunately, there are no freely available software tools for those objectives. Here we present OpenEP, the code utilized in our previous works for modeling three main EP therapies: Electrochemotherapy (ECT), Irreversible Electroporation (IRE) and Gene Electro-Transfer (GET).
-
 OpenEP is a general purpose electroporation-based treatment simulator under a free/libre user licence, which models the behavior of crucial physical variables involved in EP treatments: electrical and thermal. The implementation is based on a three-dimensional domain, using the finite difference method, implemented in C+ and parallelized with OpenMP over a GNU/Linux system. By making this application freely available, we expect to contribute in the fields of basic EP research as well as promote industrial applications.
 
 <img src="temp-pulse8-a.jpg" alt="Temperature at 8 pulse in a GET protocol." width="300"/>
