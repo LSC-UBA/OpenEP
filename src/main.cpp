@@ -112,7 +112,7 @@ int main()
                  CurrentDensity, Temperature);
         }
 
-		/* Log iteration data */
+        /* Log iteration data */
 
         if( it_number % par::log_step == 0 )
         {   
@@ -197,7 +197,7 @@ int main()
         calc_sigma( Sigma, Temperature, curr_time, it_number);
 
 
-		/* Calc. and update Temperature */
+        /* Calc. and update Temperature */
         calc_temperature(Temperature, Temperature_old, *pElectricField, K,
         				 Sigma, curr_time, it_number, dt);
         Temperature_old = Temperature;

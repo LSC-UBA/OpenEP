@@ -13,9 +13,9 @@ void init_phi(ScalarField & Phi)
             for( int i = 1; i < par::ii - 1; i++ )
             {
                 if( i < par::ii / 2 )
-                    Phi.set(i,j,k,par::max_voltage);
+                    Phi(i,j,k) = par::max_voltage;
                 else
-                    Phi.set(i,j,k,0.);
+                    Phi(i,j,k) = 0.;
             }
         }
     }
@@ -44,7 +44,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
 
                     if( par::mesh.is_elec_isolating_material(i,j,k) )
                     {
-                        Phi.set(i,j,k,0.);
+                        Phi(i,j,k) = 0.;
                     }
                     else if( !par::mesh.is_electrode(i,j,k) )
                     {
@@ -77,7 +77,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
                         res = res * par::omega 
                             + Phi_aux(i,j,k) * ( 1. - par::omega );
                         
-                        Phi.set(i,j,k,res);
+                        Phi(i,j,k) = res;
 
                         /* If is not a valid number (NaN) stop the simulation */
                         if( isnan(res) )        
@@ -105,7 +105,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
             for( int k = 0; k < par::kk; k++ )
             {
                 res = Phi(i-1,j,k);
-                Phi.set(i,j,k,res);
+                Phi(i,j,k) = res;
             }
         }
 
@@ -116,7 +116,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
             for( int k = 0; k < par::kk; k++ )
             {
                 res = Phi(i+1,j,k);
-                Phi.set(i,j,k,res);
+                Phi(i,j,k) = res;
             }
         }
 
@@ -127,7 +127,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
             for( int k = 0; k < par::kk; k++ )
             {
                 res = Phi(i,j-1,k);
-                Phi.set(i,j,k,res);
+                Phi(i,j,k) = res;
             }
         }
 
@@ -138,7 +138,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
             for( int k = 0; k < par::kk; k++ )
             {
                 res = Phi(i,j+1,k);
-                Phi.set(i,j,k,res);
+                Phi(i,j,k) = res;
             }
         }
 
@@ -149,7 +149,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
             for( int j = 0; j < par::jj; j++ )
             {
                     res = Phi(i,j,k-1);
-                    Phi.set(i,j,k,res);
+                    Phi(i,j,k) = res;
             }
         }
 
@@ -160,7 +160,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
             for( int j = 0; j < par::jj; j++ )
             {
                     res = Phi(i,j,k+1);
-                    Phi.set(i,j,k,res);
+                    Phi(i,j,k) = res;
             }
         }
 
@@ -191,13 +191,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
                     {
                     
                         aux = - ( Phi(i+1,j,k) - Phi(i-1,j,k) ) / ( 2 * par::dx );
-                        ElectricField.set(0, i, j, k, aux );
+                        ElectricField(0, i, j, k) = aux ;
                         
                         aux = - (Phi(i,j+1,k) -    Phi(i,j-1,k)) / ( 2 * par::dy );
-                        ElectricField.set(1, i, j, k, aux );
+                        ElectricField(1, i, j, k) = aux;
                         
                         aux = - (Phi(i,j,k+1) -    Phi(i,j,k-1)) / ( 2 * par::dz );
-                        ElectricField.set(2, i, j, k, aux );
+                        ElectricField(2, i, j, k) = aux;
 
                     }
                 }
@@ -213,13 +213,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
             {
 
                 aux = ElectricField(0,i+1,j,k);
-                ElectricField.set(0, i, j, k, aux);
+                ElectricField(0, i, j, k) = aux;
                 
                 aux = ElectricField(1,i+1,j,k);
-                ElectricField.set(1, i, j, k, aux);
+                ElectricField(1, i, j, k) = aux;
                 
                 aux = ElectricField(2,i+1,j,k);
-                ElectricField.set(2, i, j, k, aux);
+                ElectricField(2, i, j, k) = aux;
 
             }
         }
@@ -232,13 +232,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
             {
 
                 aux = ElectricField(0,i-1,j,k);
-                ElectricField.set(0, i, j, k, aux);
+                ElectricField(0, i, j, k) = aux;
                 
                 aux = ElectricField(1,i-1,j,k);
-                ElectricField.set(1, i, j, k, aux);
+                ElectricField(1, i, j, k) = aux;
                 
                 aux = ElectricField(2,i-1,j,k);
-                ElectricField.set(2, i, j, k, aux);
+                ElectricField(2, i, j, k) = aux;
 
             }
         }
@@ -252,13 +252,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
             {
 
                 aux = ElectricField(0,i,j+1,k);
-                ElectricField.set(0, i, j, k, aux);
+                ElectricField(0, i, j, k) = aux;
                 
                 aux = ElectricField(1,i,j+1,k);
-                ElectricField.set(1, i, j, k, aux);
+                ElectricField(1, i, j, k) = aux;
                 
                 aux = ElectricField(2,i,j+1,k);
-                ElectricField.set(2, i, j, k, aux);
+                ElectricField(2, i, j, k) = aux;
 
             }
         }
@@ -271,13 +271,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
             {
 
                 aux = ElectricField(0,i,j-1,k);
-                ElectricField.set(0, i, j, k, aux);
+                ElectricField(0, i, j, k) = aux;
                 
                 aux = ElectricField(1,i,j-1,k);
-                ElectricField.set(1, i, j, k, aux);
+                ElectricField(1, i, j, k) = aux;
                 
                 aux = ElectricField(2,i,j-1,k);
-                ElectricField.set(2, i, j, k, aux);
+                ElectricField(2, i, j, k) = aux;
 
             }
         }
@@ -290,13 +290,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
             {
 
                 aux = ElectricField(0,i,j,k+1);
-                ElectricField.set(0, i, j, k, aux);
+                ElectricField(0, i, j, k) = aux;
                 
                 aux = ElectricField(1,i,j,k+1);
-                ElectricField.set(1, i, j, k, aux);
+                ElectricField(1, i, j, k) = aux;
                 
                 aux = ElectricField(2,i,j,k+1);
-                ElectricField.set(2, i, j, k, aux);
+                ElectricField(2, i, j, k) = aux;
 
             }
         }
@@ -309,13 +309,13 @@ void calc_electric_field(VectorField & ElectricField, ScalarField & Phi)
             {
 
                 aux = ElectricField(0,i,j,k-1);
-                ElectricField.set(0, i, j, k, aux);
+                ElectricField(0, i, j, k) = aux;
                 
                 aux = ElectricField(1,i,j,k-1);
-                ElectricField.set(1, i, j, k, aux);
+                ElectricField(1, i, j, k) = aux;
                 
                 aux = ElectricField(2,i,j,k-1);
-                ElectricField.set(2, i, j, k, aux);
+                ElectricField(2, i, j, k) = aux;
 
             }
         }
@@ -341,7 +341,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
 
                     res = par::sigma_domain_init 
                         * (1 + par::alpha0 *(Temperature(i,j,k) - par::temp));
-                    Sigma.set(i,j,k,res);
+                    Sigma(i, j, k) = res;
 
                     /* If is not a valid number (NaN) stop the simulation */
                     if( isnan(res) )
@@ -368,7 +368,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
         {
 
             res = Sigma(i-1,j,k);
-            Sigma.set(i,j,k,res);
+            Sigma(i,j,k) = res;
 
         }
     }
@@ -381,7 +381,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
         {
 
             res = Sigma(i+1,j,k);
-            Sigma.set(i,j,k,res);
+            Sigma(i,j,k) = res;
 
         }
     }
@@ -394,7 +394,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
         {
 
             res = Sigma(i,j-1,k);
-            Sigma.set(i,j,k,res);
+            Sigma(i,j,k) = res;
 
         }
     }
@@ -407,7 +407,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
         {
 
             res = Sigma(i,j+1,k);
-            Sigma.set(i,j,k,res);
+            Sigma(i,j,k) = res;
 
         }
     }
@@ -420,7 +420,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
         {
 
             res = Sigma(i,j,k-1);
-            Sigma.set(i,j,k,res);
+            Sigma(i,j,k) = res;
 
         }
     }
@@ -433,7 +433,7 @@ void calc_sigma( ScalarField & Sigma, ScalarField & Temperature,
         {
 
             res = Sigma(i,j,k+1);
-            Sigma.set(i,j,k,res);
+            Sigma(i,j,k) = res;
 
         }
     }
@@ -525,6 +525,6 @@ void set_in_electrodes(ScalarField & scalarField, const long double val,
         i = electrodes[l][0];
         j = electrodes[l][1];
         k = electrodes[l][2];
-        scalarField.set(i,j,k,val);
+        scalarField(i,j,k) = val;
     }
 }

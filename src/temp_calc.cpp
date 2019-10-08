@@ -79,7 +79,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
                     }
                                         
                     // Set new value
-                    Temperature.set(i,j,k,aux);
+                    Temperature(i,j,k) = aux;
 
                     // If is not a valid number (NaN) stop the simulation
                     if( isnan(aux) )
@@ -138,7 +138,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
                     }
 
                     // Set new value
-                    Temperature.set(i,j,k,aux);
+                    Temperature(i,j,k) = aux;
                 
                     // If is not a valid number (NaN) stop the simulation
                     if( isnan(aux) )
@@ -162,7 +162,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
         for( int k = 0; k < par::kk; k++ )
         {
               aux = Temperature(i-1,j,k);
-              Temperature.set(i,j,k,aux);
+              Temperature(i,j,k) = aux;
         }
     }
 
@@ -173,7 +173,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
         for( int k = 0; k < par::kk; k++ )
         {
             aux = Temperature(i+1,j,k);
-            Temperature.set(i,j,k,aux);
+            Temperature(i,j,k) = aux;
         }
     }
 
@@ -184,7 +184,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
         for( int k = 0; k < par::kk; k++ )
         {
             aux = Temperature(i,j-1,k);
-            Temperature.set(i,j,k,aux);
+            Temperature(i,j,k) = aux;
         }
     }
 
@@ -195,7 +195,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
         for( int k = 0; k < par::kk; k++ )
         {
               aux = Temperature(i,j+1,k);
-              Temperature.set(i,j,k,aux);
+              Temperature(i,j,k) = aux;
         }
     }
 
@@ -206,7 +206,7 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
         for( int j = 0; j < par::jj; j++ )
         {
             aux = Temperature(i,j,k-1);
-            Temperature.set(i,j,k,aux);
+            Temperature(i,j,k) = aux;
         }
     }
 
@@ -220,12 +220,12 @@ void calc_temperature(  ScalarField & Temperature, ScalarField & Temperature_old
             {
                 long double r = - par::h * par::dz / K(i,j,k); 
                 aux = ( r * par::temp_air - Temperature(i,j,k+1) ) / ( r - 1 );
-                Temperature.set(i,j,k,aux);
+                Temperature(i,j,k) = aux;
             } 
             else 
             {
                 aux = Temperature(i,j,k+1);
-                Temperature.set(i,j,k,aux);
+                Temperature(i,j,k) = aux;
             }
         }
     }

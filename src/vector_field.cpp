@@ -110,7 +110,7 @@ VectorField::VectorField(const Mesh &mesh0, const ScalarField & vx, const Scalar
 
 void VectorField::set(const int coord, const int i, const int j, const int k, long double val)
 {
-    scalar_component[coord].set(i, j, k, val);
+    scalar_component[coord](i, j, k) = val;
 }
 
 void VectorField::set_coordinate(const int coord, const ScalarField & v)
@@ -181,7 +181,7 @@ ScalarField VectorField::get_norm()
                 val =   sqrt(   pow( get(0,i,j,k), 2) + 
                         pow( get(1,i,j,k), 2) +
                         pow( get(2,i,j,k), 2) );
-                norm.set(i, j, k, val);
+                norm(i, j, k) = val;
             }
         }
     }
@@ -201,9 +201,9 @@ VectorField& VectorField::operator =(const VectorField & other)
     return *this;
 }
 
-long double VectorField::operator()(const int coord, const int i, const int j, const int k) const
+long double & VectorField::operator()(const int coord, const int i, const int j, const int k) const
 {
-    return get(coord, i, j, k);
+    return scalar_component[coord](i,j,k);
 }
 
 VectorField VectorField::operator +=(const VectorField & other) const

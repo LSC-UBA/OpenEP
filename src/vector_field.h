@@ -47,7 +47,7 @@ public:
 
     VectorField& operator =(const VectorField & other);
 
-    long double operator()(const int coord, const int i, const int j, const int k) const;
+    long double & operator()(const int coord, const int i, const int j, const int k) const;
 
     VectorField operator +=(const VectorField & other) const;
 

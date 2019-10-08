@@ -216,9 +216,8 @@ ScalarField ScalarField::operator +(const ScalarField & other) const
         {
             for (int k = 0; k < kk; k++)
             {
-                add.set(i, j, k,
-                        p_mat[i + j * ii + ii * jj * k]
-                                - other(i, j, k));
+                add(i, j, k) =
+                        p_mat[i + j * ii + ii * jj * k] - other(i, j, k);
             }
         }
     }
@@ -235,9 +234,8 @@ ScalarField ScalarField::operator *(const ScalarField & other) const
         {
             for (int k = 0; k < kk; k++)
             {
-                mul.set(i, j, k,
-                        p_mat[i + j * ii + ii * jj * k]
-                                * other(i, j, k));
+                mul(i, j, k) =
+                        p_mat[i + j * ii + ii * jj * k] * other(i, j, k);
             }
         }
     }
@@ -254,9 +252,8 @@ ScalarField ScalarField::operator -(const ScalarField & other) const
         {
             for (int k = 0; k < kk; k++)
             {
-                diff.set(i, j, k,
-                        p_mat[i + j * ii + ii * jj * k]
-                                - other(i, j, k));
+                diff(i, j, k) =
+                        p_mat[i + j * ii + ii * jj * k] - other(i, j, k);
             }
         }
     }
