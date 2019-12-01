@@ -13,7 +13,7 @@ OpenEP is a general purpose electroporation-based treatment simulator under a fr
 This code was explicitly used in the following scientific publications:
 
 - (In preparation) "The role of damage in reversible electroporation optimization: theory and experiments in a vegetable model". Authors: M. Marino et al. 2019.
-- (Under review) "OpenEP: an open source electric-thermal simulator for electroporation-based treatments". Computer Physics Communications. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019.
+- (Under review) "OpenEP: an open source electric-thermal simulator for electroporation-based treatments". Scientific Reports, Nature. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019.
 - "Towards an optimal doseresponse relationship in gene electrotransfer protocols". Electrochimica Acta. E. Luján, M. Marino, N. Olaiz, G. Marshall. 2019.
 
 This code implements the standard electroporation model used in scientific publications such as:
