@@ -458,7 +458,7 @@ long double calc_electric_current(VectorField & CurrentDensity)
             /* n = (1,0,0) */
             electricCurrent += CurrentDensity(0, off_i, j, k ) 
                             * par::dy * par::dz;
-            /* n = (1,0,0) */
+            /* n = (-1,0,0) */
             electricCurrent += - CurrentDensity(0, 0, j, k )
                             * par::dy * par::dz;
 
