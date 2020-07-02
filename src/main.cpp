@@ -51,7 +51,7 @@ int main()
     (void)par::dz;
 
     /* Declare state variables */
-    int it_number = 0;
+    unsigned long it_number = 0;
     int save_counter = 0;
     long double curr_time = 0.;
     long double pulse_time_acum = 0.;
@@ -105,7 +105,7 @@ int main()
     {
         
         /* Save data */
-            
+
         if( it_number % par::save_step == 0 )
         {
             save(curr_time, save_counter, *pPhi, *pElectricField, Sigma, 
@@ -146,11 +146,11 @@ int main()
             /* Calc. Current Density */
             /* CurrentDensity = ElectricField * Sigma; */
             CurrentDensity.set_coordinate(0, 
-            	pElectricField->get_coordinate(0) * Sigma );
+                pElectricField->get_coordinate(0) * Sigma );
             CurrentDensity.set_coordinate(1,
-            	pElectricField->get_coordinate(1) * Sigma );
+                pElectricField->get_coordinate(1) * Sigma );
             CurrentDensity.set_coordinate(2,
-            	pElectricField->get_coordinate(2) * Sigma );
+                pElectricField->get_coordinate(2) * Sigma );
         }
         /* Pulse change: Off --> On */
         else if( !pulse_on && ( pulse_time_acum > par::off_pulse_time) ) 
@@ -199,7 +199,7 @@ int main()
 
         /* Calc. and update Temperature */
         calc_temperature(Temperature, Temperature_old, *pElectricField, K,
-        				 Sigma, curr_time, it_number, dt);
+                         Sigma, curr_time, it_number, dt);
         Temperature_old = Temperature;
 
         /* Calc. accum. elec. charge */
