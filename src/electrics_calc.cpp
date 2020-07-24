@@ -3,7 +3,7 @@
 /* --------------------- Electrical variable calculation ------------------- */
 
 /* Calculate initial distribution of Phi */
-void init_phi(ScalarField & Phi)
+void init_phi(ScalarField & Phi, long double max_voltage)
 {
     #pragma omp parallel for collapse(3) schedule(static)
     for( int k = 1; k < par::kk - 1; k++ )
@@ -12,10 +12,21 @@ void init_phi(ScalarField & Phi)
         {
             for( int i = 1; i < par::ii - 1; i++ )
             {
-                if( i < par::ii / 2 )
-                    Phi(i,j,k) = par::max_voltage;
+                if (max_voltage >= 0)
+                {
+                    if( i < par::ii / 2 )
+                        Phi(i,j,k) = max_voltage;
+                    else
+                        Phi(i,j,k) = 0.;
+                }
                 else
-                    Phi(i,j,k) = 0.;
+                {
+                    if( i > par::ii / 2 )
+                        Phi(i,j,k) = -max_voltage;
+                    else
+                        Phi(i,j,k) = 0.;
+
+                }
             }
         }
     }

@@ -5,10 +5,21 @@
 #include "temp_calc.h"
 #include "electrics_calc.h"
 #include "save.h"
+#include "utils.h"
 
 /* Main simulation */
 int main()
 {
+    /* Validate parameters in par.h */
+    try
+    {
+        validate_par();
+    }
+    catch(const char* msg)
+    {
+        std::cout << msg << std::endl;
+        return -1;
+    }
 
     /* Starting time calc. */
     long double begin = time(NULL);
@@ -59,7 +70,10 @@ int main()
     int pulse = 0;
     bool log_created = false;
     long double q_accum = 0;
-    long double dt = par::dt_on_pulse;
+    long double dt = par::dts_on_pulse[0];
+    int rep_count = par::pulse_repetitions[0];
+    int idx_repetition = 0;
+    int idx_pulse = 0;
     
     /* Parameters */
     save_parameters();
@@ -81,7 +95,7 @@ int main()
                     par::mesh.get_cathode_number() );
     
     /* Calc. initial Phi. Phi is constant along the simulation */
-    init_phi(Phi);
+    init_phi(Phi, par::max_voltages[0]);
     Phi_aux = Phi;
     calc_nonlinear_phi( Phi, Phi_aux, Sigma, curr_time, it_number,
                         par::max_sub_it_init_Phi);
@@ -98,7 +112,7 @@ int main()
 
     /* --------------------------- Simulation ------------------------------ */
 
-    std::cout << "Simulation begins...";
+    std::cout << "Simulation begins..." << std::endl;
 
     /* Temporal iterations */
     while( curr_time <= par::max_time )
@@ -106,7 +120,7 @@ int main()
         
         /* Save data */
 
-        if( it_number % par::save_step == 0 )
+        if( it_number % par::save_steps[idx_pulse] == 0 )
         {
             save(curr_time, save_counter, *pPhi, *pElectricField, Sigma, 
                  CurrentDensity, Temperature);
@@ -123,7 +137,7 @@ int main()
         /* Calc. in domain boundaries */
 
         /* Pulse change: On --> Off */
-        if( pulse_on && ( pulse_time_acum > par::on_pulse_time) )
+        if( pulse_on && ( pulse_time_acum > par::on_pulse_times[idx_pulse]) )
         {
             /* Save and log */
             save(curr_time, save_counter, *pPhi,*pElectricField, Sigma, 
@@ -136,7 +150,7 @@ int main()
             pulse_time_acum = 0.;
             
             /* Increment dt due to off pulse is very long */
-            dt = par::dt_off_pulse;
+            dt = par::dts_off_pulse[idx_pulse];
             
             /* Set Electric potential and Electric Field to zero. When pulse */
             /* is off, electric potential and field are zero at any point. */
@@ -153,7 +167,7 @@ int main()
                 pElectricField->get_coordinate(2) * Sigma );
         }
         /* Pulse change: Off --> On */
-        else if( !pulse_on && ( pulse_time_acum > par::off_pulse_time) ) 
+        else if( !pulse_on && ( pulse_time_acum > par::off_pulse_times[idx_pulse]) ) 
         {
             /* Save and log */
             save( curr_time, save_counter, *pPhi,*pElectricField, Sigma,
@@ -161,25 +175,50 @@ int main()
             log( curr_time, pulse,  Temperature, *pPhi, Sigma, CurrentDensity,
                  q_accum, log_created);
 
-            /* Some control variables */
+             /* Some control variables */
             pulse_on = true;
             pulse_time_acum = 0.;
             
             /* Decrease dt due to on pulse is very short */
-            dt = par::dt_on_pulse;
+            dt = par::dts_on_pulse[idx_pulse];
             
             /* Incremente number of pulses */
             pulse++;
             
-            /* Set Electric potential and Field to the values before pulse off. */
+            /* Logic related to variable pulses */
+            if(rep_count == 1)
+            {
+                /* No more repetitons (pulses) for given voltage */
+                if(idx_pulse == par::no_elems_per_cycle - 1)
+                {
+                    /* Start new cycle */
+                    idx_pulse = 0;
+                    idx_repetition = 0;
+                    rep_count = par::pulse_repetitions[0];
+                    dt = par::dts_on_pulse[0];
+                }
+                else
+                {
+                    /* Go to next voltage */
+                    idx_pulse++;
+                    rep_count = par::pulse_repetitions[++idx_repetition];
+                    dt = par::dts_on_pulse[idx_pulse];
+                
+                }
+
+                /* Apply new voltage if required */
+                init_phi(Phi, par::max_voltages[idx_pulse]);
+                calc_nonlinear_phi( Phi, Phi_aux, Sigma, curr_time, par::max_sub_it_init_Phi);
+                calc_electric_field(ElectricField, Phi);
+            } 
+            else 
+            {
+                /* Still some pulses to apply for related voltage */
+                rep_count--;
+            }            
+            
             pPhi = &Phi;
             pElectricField = &ElectricField;
-
-            /* Calc. Current Density */
-            /* CurrentDensity = ElectricField * Sigma; */
-            CurrentDensity.set_coordinate(0, pElectricField->get_coordinate(0) * Sigma );
-            CurrentDensity.set_coordinate(1, pElectricField->get_coordinate(1) * Sigma );
-            CurrentDensity.set_coordinate(2, pElectricField->get_coordinate(2) * Sigma );
         }
         
         /* Calc. Electric Potential and Electric Field based on Sigma. 
@@ -191,6 +230,12 @@ int main()
                         
             /* Calc. Electric Field */
             calc_electric_field(ElectricField, Phi);
+
+            /* Calc. Current Density */
+            /* CurrentDensity = ElectricField * Sigma; */
+            CurrentDensity.set_coordinate(0, ElectricField.get_coordinate(0) * Sigma );
+            CurrentDensity.set_coordinate(1, ElectricField.get_coordinate(1) * Sigma );
+            CurrentDensity.set_coordinate(2, ElectricField.get_coordinate(2) * Sigma );
         }
         
         /* Calc. Sigma (Electrical Conductivity) */
