@@ -2,8 +2,9 @@
 
 # OpenEP: an open source electrical-thermal simulator for electroporation-based treatments
 
-Over more than a decade, electroporation (EP) based treatments have increased the interest of several scientific and industrial sectors, such as medical, food processing and environmental science. Computational modeling proved to be a fundamental tool for predicting, describing and optimizing these therapies. Unfortunately, there are no freely available software tools for those objectives. Here we present OpenEP, the code utilized in our previous works for modeling three main EP therapies: Electrochemotherapy (ECT), Irreversible Electroporation (IRE) and Gene Electro-Transfer (GET).
-OpenEP is a general purpose electroporation-based treatment simulator under a free/libre user licence, which models the behavior of crucial physical variables involved in EP treatments: electrical and thermal. The implementation is based on a three-dimensional domain, using the finite difference method, implemented in C+ and parallelized with OpenMP over a GNU/Linux system. By making this application freely available, we expect to contribute in the fields of basic EP research as well as promote industrial applications.
+The application of short electric pulses to biological tissues have spread across several scientific and industrial sectors, such as medical, food processing, biotechnology, and environmental science. In medicine, gene electrotransfer has proven to be a powerful method for DNA delivery. Besides, electrochemotherapy and irreversible EP have evidenced high efficacy and low side effects as antitumoral therapies, representing an alternative to traditional methods such
+as surgery, radiotherapy or chemotherapy. The knowledge of key physical magnitudes involved in electroporation or pulsed electric field treatments (i.e. electric potential, electric field, electrical conductivity, current density, electric current, electric charge, electroporated area or electric field threshold variation in time, and heat distribution) is necessary to develop improved strategies to plan and optimize the application of this family of techniques. Despite the availability of several general-purpose tools that model and/or optimize EP-based therapies, currently, there are no openly-available tools specifically designed to describe the complex physical phenomena underlying EP which can also be used as a platform for therapy optimization. To address those goals, here we present OpenEP, an EP-based treatment simulator under a free/libre user license, which models EP electrical and thermal phenomena. It allows the customization of
+several parameters such as types of tissue, electrode material and geometry, pulse length and frequency, number of pulses, field intensity, among many others. OpenEP solves, based on first principles, non-linear PDEs in three-dimensional space and time. It provides a highly efficient shared memory implementation which allows the analysis of complex scenarios taking advantage of parallel resources. We analyze three complex scenarios to test our proposal: Gene Electro-Transfer (GET), Electrochemotherapy (ECT), and Irreversible Electroporation (IRE). By making this application freely available, it is expected to contribute to the EP-based treatment research as well as to promote industrial applications.
 
 <p align="center">
 <img aling="center" src="temp-pulse8-a.jpg" alt="Temperature at 8 pulse in a GET protocol." width="300"/>
@@ -26,6 +27,26 @@ This code implements the standard electroporation model used in scientific publi
 - "A Three-Dimensional In Vitro Tumor Platform for Modeling Therapeutic Irreversible Electroporation". Authors: C. B. Arena, C. S. Szot, P. A. Garcia, M. N. Rylander and R. V. Davalos. 2012.
 - "Three-dimensional Finite-element Analysis of Joule Heating in Electrochemotherapy and in vivo Gene Electrotransfer". Authors: Igor Lacković, Ratko Magjarević and Damijan Miklavčič. 2009.
 
+# Features
+
+OpenEP provides the following features:
+
+- It is an in-silico lab, allows modeling, planning and optimizing electroporation-based treatments, including
+    - Electrochemotherapy (ECT)
+    - Irreversible Electroporation (IRE)
+    - Gene Electro-Transfer (GET)
+- It provides support for variable pulse protocols, including
+    - Combined high-voltage (short), low-voltage (long) pulse regimens.
+    - Multiple pulse trains consisting of bursts of the same (amplitude, duration, repetition rate) pulse.
+- It models two types of electrode geometries
+    - Needles, and Plates.
+- It models the dynamics of crucial physical variables involved in EP treatments
+    - Electric Field, Electric Potential, Electric Current, Electric Conductivity, Current Density, Electric Charge, and Temperature.
+- It models three-dimensional domains
+- It runs in parallel
+- Is OpenSource Software! 
+   
+  
 # Installation instructions
 
 To install OpenEP in Ubuntu 20.04 LTS follow the next steps:
