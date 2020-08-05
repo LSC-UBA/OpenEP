@@ -31,7 +31,7 @@ void save(  long double curr_time, int& save_counter, ScalarField & Phi,
 }
 
 void log(   long double curr_time, int pulse, ScalarField & Temperature,
-            ScalarField & Phi, ScalarField & Sigma, VectorField & CurrentDensity,
+            ScalarField & Phi, ScalarField & Sigma, VectorField & ElectricField, VectorField & CurrentDensity,
             long double q_accum, bool & log_created )
 
 {
@@ -45,11 +45,11 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
         file    <<  "Time [s],"
                     "Pulse number,"
                     "Potential difference [V],"
-                    // "Voltage to distance ratio [V/m],"
                     "Electric conductivity (middle) [S/m],"
                     "Electric current [A],"
                     "Electric charge [C],"
                     "Temperature (middle) [K],"
+                    "Electric field (middle) [V/m]"
                 << std::endl;
         log_created = true;
     }
@@ -65,15 +65,16 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
     long double electricCurrent =
                 calc_electric_current( CurrentDensity );
     long double temperature_middle = Temperature( par::ii / 2, par::jj / 2, par::kk / 2);
+    long double ef_middle = ElectricField.get_norm().get(par::ii / 2, par::jj / 2, par::kk / 2);
     
     file    << time << ", "
             << pulse << ", "
             << potential_difference << ", "
-            // << par::volt_to_dist << ", "
             << electricConductivity << ", "
             << electricCurrent << ", "
             << q_accum  << ", "
             << temperature_middle << ", "
+            << ef_middle
             << std::endl;
 
     /* Close file */

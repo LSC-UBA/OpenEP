@@ -174,7 +174,7 @@ long double ScalarField::get_norm() const
     return max;
 }
 
-// It assums that ii, jj and kk doesn't change
+// It is assumed that ii, jj and kk doesn't change
 ScalarField& ScalarField::operator =(const ScalarField & other)
 {
 

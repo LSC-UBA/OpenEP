@@ -1,9 +1,5 @@
-#include "par.h"
 #include "mesh.h"
-#include "scalar_field.h"
-#include "vector_field.h"
 #include "temp_calc.h"
-#include "electrics_calc.h"
 #include "save.h"
 #include "utils.h"
 
@@ -75,7 +71,7 @@ int main()
     int idx_repetition = 0;
     int idx_pulse = 0;
     
-    /* Parameters */
+    /* Parameters */    
     save_parameters();
 
     /* ----------------- Initial and boundary conditions ------------------- */
@@ -94,7 +90,7 @@ int main()
     set_in_electrodes(K, par::k_electrode_init, par::mesh.get_cathodes(),
                     par::mesh.get_cathode_number() );
     
-    /* Calc. initial Phi. Phi is constant along the simulation */
+    /* Calc. initial Phi */
     init_phi(Phi, par::max_voltages[0]);
     Phi_aux = Phi;
     calc_nonlinear_phi( Phi, Phi_aux, Sigma, curr_time, it_number,
@@ -109,6 +105,9 @@ int main()
     CurrentDensity.set_coordinate(0, pElectricField->get_coordinate(0) * Sigma );
     CurrentDensity.set_coordinate(1, pElectricField->get_coordinate(1) * Sigma );
     CurrentDensity.set_coordinate(2, pElectricField->get_coordinate(2) * Sigma );
+
+    curr_time += dt;
+    pulse_time_acum += dt;
 
     /* --------------------------- Simulation ------------------------------ */
 
@@ -130,7 +129,7 @@ int main()
 
         if( it_number % par::log_step == 0 )
         {   
-            log( curr_time, pulse, Temperature, *pPhi, Sigma, CurrentDensity,
+            log( curr_time, pulse, Temperature, *pPhi, Sigma, *pElectricField, CurrentDensity,
                  q_accum, log_created);
         }
 
@@ -140,9 +139,9 @@ int main()
         if( pulse_on && ( pulse_time_acum > par::on_pulse_times[idx_pulse]) )
         {
             /* Save and log */
-            save(curr_time, save_counter, *pPhi,*pElectricField, Sigma, 
+            save(curr_time, save_counter, *pPhi, *pElectricField, Sigma, 
                  CurrentDensity, Temperature);
-            log( curr_time, pulse,  Temperature, *pPhi, Sigma, CurrentDensity,
+            log( curr_time, pulse,  Temperature, *pPhi, Sigma, *pElectricField, CurrentDensity,
                  q_accum, log_created);
 
             /* Some control variables */
@@ -172,7 +171,7 @@ int main()
             /* Save and log */
             save( curr_time, save_counter, *pPhi,*pElectricField, Sigma,
                   CurrentDensity, Temperature);
-            log( curr_time, pulse,  Temperature, *pPhi, Sigma, CurrentDensity,
+            log( curr_time, pulse,  Temperature, *pPhi, Sigma, *pElectricField, CurrentDensity,
                  q_accum, log_created);
 
              /* Some control variables */
@@ -208,7 +207,8 @@ int main()
 
                 /* Apply new voltage if required */
                 init_phi(Phi, par::max_voltages[idx_pulse]);
-                calc_nonlinear_phi( Phi, Phi_aux, Sigma, curr_time, par::max_sub_it_init_Phi);
+                Phi_aux = Phi;
+                calc_nonlinear_phi(Phi, Phi_aux, Sigma, curr_time, it_number, par::max_sub_it_init_Phi);
                 calc_electric_field(ElectricField, Phi);
             } 
             else 
@@ -226,7 +226,7 @@ int main()
         if( pulse_on )
         {
             /* Calc. Electric Potential */
-            calc_nonlinear_phi( Phi, Phi_aux, Sigma, curr_time, it_number);
+            calc_nonlinear_phi( Phi, Phi_aux, Sigma, curr_time, it_number, par::max_sub_it_Phi);
                         
             /* Calc. Electric Field */
             calc_electric_field(ElectricField, Phi);

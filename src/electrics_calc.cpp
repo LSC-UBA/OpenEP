@@ -6,11 +6,11 @@
 void init_phi(ScalarField & Phi, long double max_voltage)
 {
     #pragma omp parallel for collapse(3) schedule(static)
-    for( int k = 1; k < par::kk - 1; k++ )
+    for( int k = 0; k < par::kk; k++ )
     {
-        for( int j = 1; j < par::jj - 1; j++ )
+        for( int j = 0; j < par::jj; j++ )
         {
-            for( int i = 1; i < par::ii - 1; i++ )
+            for( int i = 0; i < par::ii; i++ )
             {
                 if (max_voltage >= 0)
                 {
@@ -22,7 +22,7 @@ void init_phi(ScalarField & Phi, long double max_voltage)
                 else
                 {
                     if( i > par::ii / 2 )
-                        Phi(i,j,k) = -max_voltage;
+                        Phi(i,j,k) = - max_voltage;
                     else
                         Phi(i,j,k) = 0.;
 
@@ -88,7 +88,7 @@ void calc_nonlinear_phi(    ScalarField & Phi, ScalarField & Phi_aux,
                         res = res * par::omega 
                             + Phi_aux(i,j,k) * ( 1. - par::omega );
                         
-                        Phi(i,j,k) = res;
+                        Phi(i,j,k) = res;                       
 
                         /* If is not a valid number (NaN) stop the simulation */
                         if( isnan(res) )        

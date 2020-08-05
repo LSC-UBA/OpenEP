@@ -2,14 +2,14 @@
 #define PAR_H_
 
 #include "mesh.h"
-#include "scalar_field.h"
 #include "vector_field.h"
-
 
 /* ---------- Here you will find the parameters of the simulation ---------- */
 
 namespace par
 {
+
+/* ----------------------- Declaration of functions defined at the end ----------------------------- */ 
 
 int calc_no_pulses();
 long double calc_max_time();
@@ -28,7 +28,7 @@ const long double temp_air = 298.15;
 /* ---------------------------- Electrodes ---------------------------------- */
 
 /* Electrode length [m] */
-const long double electrode_length = 15e-3;
+const long double electrode_length = 14e-3;
 /* Electrode width [m] */
 const long double electrode_width = 1.29e-3;
 /* Electrode thickness [m] */
@@ -57,28 +57,28 @@ const long double z_max = 15e-3;
 /* Voltages to distance ratio [V m^-1] */
 const double volt_to_dist[] = {300000, -300000};
 /* On times [s] */
-const double on_pulse_times[] = {2e-6, 2e-6};
+const double on_pulse_times[] = {2e-6, 0.25e-6};
 /* Off times [s] */
 const double off_pulse_times[] = {1e-6, 1e-6};
 /* How many repetitions of each pulse */
 const double pulse_repetitions[] = {1, 1};
 /* No. of cycle repetition. A cycle is a sequence of pulses. */
-const int no_cycles = 100;
-/* No. of elements of each cycle. Each element could correspond to several pulses */
-const int no_elems_per_cycle = 2;
-/* No. of pulses */
-const int no_pulses = calc_no_pulses();
+const int no_cycles = 2;
 
 /* ----------- Other parameters, calculated from the above ----------------- */
 
+/* No. of pulses */
+const int no_pulses = calc_no_pulses();
+/* No. of elements of each cycle. Each element could correspond to several pulses */
+const int no_elems_per_cycle = sizeof(par::volt_to_dist) / sizeof(par::volt_to_dist[0]);
 /* Simulation total time [s] */
 const long double max_time = calc_max_time();
 /* Maximum voltages [V] */
 inline const long double * max_voltages = calc_max_voltages();
 /* Potentials in the anode [V] */
-inline const long double * phi_anodes = max_voltages; // TODO: Useful?
+inline const long double * phi_anodes = max_voltages;
 /* Potential in the cathode [V] */
-const long double phi_cathode = 0.; // TODO: Useful?
+const long double phi_cathode = 0.;
 /* Initial electric potential [V] */
 const long double phi_init = 0.;
 /* Initial electric field [V m^-1] */
@@ -160,7 +160,7 @@ const double tol = 1.e-9;
 /* Max. sub iteration number for Phi */
 const int max_sub_it_Phi = 50;
 /* Max. sub iteration number for initial condition of Phi */
-const int max_sub_it_init_Phi = 10000;
+const int max_sub_it_init_Phi = 25000;
 /* Relaxation */
 const long double omega =  1.;
 
@@ -168,11 +168,9 @@ const long double omega =  1.;
 
 /* Time step during on pulse [s] */
 const long double dt_fractions_on = 500.;
-// const long double dts_on_pulse[] =  {2e-7};
 inline const long double * dts_on_pulse =  calc_dts_on(dt_fractions_on);
 /* Time step during off pulse [s] */
-const long double dt_fractions_off = 500.;
-// const long double dts_off_pulse[] = {1e-06};
+const long double dt_fractions_off = 250.;
 inline const long double * dts_off_pulse = calc_dts_off(dt_fractions_off);
 
 /* -------------------------- Save and log parameters  ------------------------ */
@@ -180,7 +178,7 @@ inline const long double * dts_off_pulse = calc_dts_off(dt_fractions_off);
 /* Save each ... iterations */
 inline const int * save_steps = calc_save_steps();
 /* Log each ... iterations */
-const int log_step = 100;
+const int log_step = 50;
 /* "vtk" or "csv" */
 const std::string save_format = "vtk";
 
