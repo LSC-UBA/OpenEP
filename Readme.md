@@ -7,8 +7,9 @@ as surgery, radiotherapy or chemotherapy. The knowledge of key physical magnitud
 several parameters such as types of tissue, electrode material and geometry, pulse length and frequency, number of pulses, field intensity, among many others. OpenEP solves, based on first principles, non-linear PDEs in three-dimensional space and time. It provides a highly efficient shared memory implementation which allows the analysis of complex scenarios taking advantage of parallel resources. This code was utilized in our previous works for modeling three main EP therapies: Electrochemotherapy (ECT), Irreversible Electroporation (IRE) and Gene Electro-Transfer (GET). By making this application freely available, it is expected to contribute to the EP-based treatment research as well as to promote industrial applications.
 
 <p align="center">
-<img aling="center" src="temp-pulse8-a.jpg" alt="Temperature at 8 pulse in a GET protocol." width="300"/>
-<img aling="center" src="temp-pulse8-b.jpg" alt="Temperature at 8 pulse in a GET protocol." width="300"/>
+<img aling="center" src="temp-pulse8-a.jpg" alt="Temperature at 8 pulse in a GET protocol." width="250"/>
+<img aling="center" src="temp-pulse8-b.jpg" alt="Temperature at 8 pulse in a GET protocol." width="250"/>
+<img aling="center" src="varpulse-voltage-current.jpg" alt="Variable pulse protocol, voltage and electric current." width="250"/>
 </p>
 
 If you like OpenEP, please consider starring [link](https://github.com/LSC-UBA/OpenEP "us on GitHub") and spreading the word!
