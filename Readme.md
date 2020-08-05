@@ -38,10 +38,11 @@ OpenEP provides the following features:
 - It provides support for variable-pulse protocols, including
     - Combined high-voltage (short), low-voltage (long) pulse regimens.
     - Multiple pulse trains consisting of bursts of the same (amplitude, duration, repetition rate) pulse.
+- It models the dynamic of crucial physical variables involved in EP treatments
+    - Electric Field, Electric Potential, Electric Current, Electric Conductivity, Current Density, Electric Charge, and Temperature.
 - It models two types of electrode geometries
     - Needles, and plates (electrode length, width, thickness, anode-cathode distances, etc.)
-- It models the dynamics of crucial physical variables involved in EP treatments
-    - Electric Field, Electric Potential, Electric Current, Electric Conductivity, Current Density, Electric Charge, and Temperature.
+
 - It models three-dimensional domains
 - It runs in parallel in your notebook or in a computer cluster, using shared memory.
 - Is OpenSource Software! 
@@ -55,35 +56,38 @@ To install OpenEP in Ubuntu 20.04 LTS follow the next steps:
 2. Download and install Paraview following the instructions in [here](https://www.paraview.org/download/ "Paraview").
 
 
-# How to setup your experiment
+# How to setup and run your experiment
 
-This code can be adapted to your specific in-silico experiment modifiyng the configuration file ```OpenEP/src/par.h```. Different illustrative examples can be found at the cases folder. Example of the parameters in par.h:
+1. This code can be adapted to your specific in-silico experiment modifiyng the configuration file ```src/par.h```. Different illustrative examples can be found at ```cases/``` folder. Example of the parameters in par.h:
 
-Electrodes:
-  - electrode_length: 0.007
-  - electrode_width: 0.0007
-  - electrode_thickness: 0.0007
-  - gap_anode_cathode: 0.008
-  - electrode_type: needles
-  - gap_elect_elect: 0.005
-  - no_electrodes: 1
+       Electrodes:
+       - electrode_length: 0.007
+       - electrode_width: 0.0007
+       - electrode_thickness: 0.0007
+       - gap_anode_cathode: 0.008
+       - electrode_type: needles
+       - gap_elect_elect: 0.005
+       - no_electrodes: 1
   
-Domain dimensions:
-  - x_max: 0.032
-  - y_max: 0.032
-  - z_max: 0.017
+       Domain dimensions:
+       - x_max: 0.032
+       - y_max: 0.032
+       - z_max: 0.017
    
-Treatment parameters:
-  - volt_to_dist: 25000
-  - freq: 1
-  - on_pulse_time: 0.05
-  - nbr_pulses: 8
+       Treatment parameters:
+       - volt_to_dist: 25000
+       - freq: 1
+       - on_pulse_time: 0.05
+       - nbr_pulses: 8
+  
+  2. After modifying the code (```src/par.h```), compilation and execution can be done effortlessly typing in the linux terminal: ```./run.sh```. The complete set of options of the bash script are described in the following section. The script will create a directory named ```simulation-1``` with three subdirectories in it: ```bin```, ```data``` and ```src```, which stores the simulation executable file, the output data (Paraview-compliant or csv output files) and the source code of this particular simulation, respectively. Next time the script is executed the simulation directory will be named with the following natural number with regard to the last simulation, i.e. ```simulation-2```.
+  
+  3. In ```simulation-1/data/``` folder you will find vtk and/or csv output files (depending on the selected configuration in ```src/par.h```). Output formats were selected to be compatible with the powerful visualization tool: Paraview. You can find tutorials about Paraview use in [here](https://www.paraview.org/tutorials/ "Paraview Tutorials").
+  
+  
+# More about the software...
 
-# Compilation and execution instructions
-
-After modifying the code (```OpenEP/src/par.h```), compilation and execution can be done effortlessly through the run.sh bash script.
-The options of the script are described in the table below.
-Typing in the console: run.sh will create a directory named simulation-1 with three subdirectories in it: bin, data and src, which stores the simulation executable file, the output data (Paraview-compliant or csv output files) and the source code of this particular simulation, respectively. Next time the script is executed the simulation directory will be named with the following natural number with regard to the last simulation, i.e. simulation-2.
+## run.sh options
 
 | run.sh option | Description |
 |---------------|---------------|
@@ -101,7 +105,7 @@ Typing in the console: run.sh will create a directory named simulation-1 with th
 | O3 OMP | Compilation with O3 optimizations and OpenMP. |
 | FAST OMP | Compilation with Ofast optimizations and OpenMP. |
 
-# Code file descriptions
+## Code file descriptions
 
 | Source file |  Description  |
 |---------------|---------------|
@@ -113,11 +117,5 @@ Typing in the console: run.sh will create a directory named simulation-1 with th
 | scalar_field.h, scalar_field.cpp |   ScalarField class is defined in these files. Instances of this class are used in main.cpp, electrics_calc.h, temp_calc.h for depicting  Phi, |**E**|, |**j**| and sigma. | 
 | vector_field.h, vector_field.cpp |   VectorField class is defined in these files. Instances of this class are used in main.cpp, electrics_calc.h and temp_calc.h for depicting **E** and **j**.  | 
 | save.h, save.cpp |   Saving of the different scalar and vector fields as well as the log, are implemented in these files.| 
-
-# Output
-
-In the "data" folder you will find vtk and/or csv output files.
-Each file represents the tumor concentration of a particular time.
-Output formats were selected to be compatible with the powerful visualization tool: Paraview.
 
 
