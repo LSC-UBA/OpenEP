@@ -51,10 +51,12 @@ OpenEP provides the following features:
   
 # Installation instructions
 
-To install OpenEP in Ubuntu 20.04 LTS follow the next steps:
+To install OpenEP in GNU/Linux follow the next steps:
 
-1. Download OpenEP code from [here](https://github.com/LSC-UBA/OpenEP/archive/master.zip "OpenEP code"), and uncompress the zip file.
-2. Download and install Paraview following the instructions in [here](https://www.paraview.org/download/ "Paraview").
+1. Install GCC (GNU Compiler Collection), version 7.4.0+
+    - Note: to install in Ubuntu 18.04+, type in the console ```sudo apt update``` and then ```sudo apt install build-essential```
+2. Download OpenEP code from [here](https://github.com/LSC-UBA/OpenEP/archive/master.zip "OpenEP code"), and uncompress the zip file.
+3. Download and install Paraview following the instructions in [here](https://www.paraview.org/download/ "Paraview").
 
 
 # How to setup and run your experiment
