@@ -63,7 +63,7 @@ To install OpenEP in GNU/Linux follow the next steps:
 
 1. **OpenEP** can be adapted to your specific in-silico experiment by modifiyng the configuration file *par.h*. Different illustrative examples can be found in the cases folder.
 
-Aside from regular monopolar pulses, *OpenEP* provides the abiliy to simulate bipolar pulses protocols with variable pulse amplitude and pulse length. For this purpose, five parameters must be set:
+Aside from regular monopolar pulses, **OpenEP** provides the abiliy to simulate bipolar pulses protocols with variable pulse amplitude and pulse length. For this purpose, five parameters must be set:
 
 ```c++
   const double volt_to_dist[]     // V/m
@@ -73,12 +73,11 @@ Aside from regular monopolar pulses, *OpenEP* provides the abiliy to simulate bi
   const int no_cycles
 ```
 
-The *i*-th position in *volt_to_dist* array indicates the voltage to distance ratio (in volt per meter) for the *i*-th pulse or *set of pulses*.
-The *on_pulse_times* and *off_pulse_times* arrays behave in the same way: ON and OFF time duration for the *i*-th pulse or *set of pulses*, respectively. The reason behind the term *set of pulses* is explained by the *pulse_repetitions* array. This array indicates how many pulses have to be applied with the characteristics described in the *i*-th position of the parameters explained above (voltage, ON and OFF). When the last pulse is running (last position in the arrays), the variable *no_cycles* decides whether the simulation has to return to the position 0 of the arrays. If *no_cycles = 1*, the simulation will finish. Otherwise, it will start over.
+   The *i*-th position in *volt_to_dist* array indicates the voltage to distance ratio (in volt per meter) for the *i*-th pulse or *set of pulses*. The *on_pulse_times* and *off_pulse_times* arrays behave in the same way: ON and OFF time duration for the *i*-th pulse or *set of pulses*, respectively. The reason behind the term *set of pulses* is explained by the *pulse_repetitions* array. This array indicates how many pulses have to be applied with the characteristics described in the *i*-th position of the parameters explained above (voltage, ON and OFF). When the last pulse is running (last position in the arrays), the variable *no_cycles* decides whether the simulation has to return to the position 0 of the arrays. If *no_cycles = 1*, the simulation will finish. Otherwise, it will start over.
 
-To clarify, some examples are sketched below:
+   To clarify, some examples are sketched below:
 
-* First example (taken from [Zorec 2013](https://www.sciencedirect.com/science/article/pii/S0378517313008557)). The simulation consists of a combination of high voltage and low voltage pulses (HV-LV). The parameters of the HV pulses are: 250000 V/m, 0.0005 sec. ON, and 0.0005 sec. OFF. The parameters of LV pulses are: 22500 V/m, 0.250 sec. ON and 0.1 sec OFF. If we want to apply 3 x HV + 3 x LV (three high-voltage pulses followed by three low-voltage pulses), we must set the five parameters in the following way:
+   * First example (taken from [Zorec 2013](https://www.sciencedirect.com/science/article/pii/S0378517313008557)). The simulation consists of a combination of high voltage and low voltage pulses (HV-LV). The parameters of the HV pulses are: 250000 V/m, 0.0005 sec. ON, and 0.0005 sec. OFF. The parameters of LV pulses are: 22500 V/m, 0.250 sec. ON and 0.1 sec OFF. If we want to apply 3 x HV + 3 x LV (three high-voltage pulses followed by three low-voltage pulses), we must set the five parameters in the following way:
 
 ``` c++
   const double volt_to_dist[] = {250000, 22500};  // V/m
@@ -88,7 +87,7 @@ To clarify, some examples are sketched below:
   const int no_cycles = 1;
 ```
 
-On the other hand, if we want to apply (HV + LV) x 3:
+   On the other hand, if we want to apply (HV + LV) x 3:
 
 ``` c++
   const double volt_to_dist[] = {250000, 22500};  // V/m
@@ -98,7 +97,7 @@ On the other hand, if we want to apply (HV + LV) x 3:
   const int no_cycles = 3;
 ```
 
-* Second example (taken from [Sano 2017](https://www.nature.com/articles/srep40747)). We want to simulate 100 burst of symmetric bipolar pulses: 2 *us* of positive pulse (300000 V/m), 1 *us* delay (OFF time) and 2 *us* of negative pulse (- 300000 V/m). The paramaters must be set as follows:
+   * Second example (taken from [Sano 2017](https://www.nature.com/articles/srep40747)). We want to simulate 100 burst of symmetric bipolar pulses: 2 *us* of positive pulse (300000 V/m), 1 *us* delay (OFF time) and 2 *us* of negative pulse (- 300000 V/m). The paramaters must be set as follows:
 
 ```c++
   const double volt_to_dist[] = {300000, -300000};  // V/m
@@ -108,7 +107,7 @@ On the other hand, if we want to apply (HV + LV) x 3:
   const int no_cycles = 100;
 ```
 
-* Third example (taken from [Lackovic 2009](https://ieeexplore.ieee.org/abstract/document/5293947)). In-silico experiment of a monopolar protocol with constant pulse length and pulse amplitude: 8 x 0.250 sec., 25000 V/m at 1 Hz.
+   * Third example (taken from [Lackovic 2009](https://ieeexplore.ieee.org/abstract/document/5293947)). In-silico experiment of a monopolar protocol with constant pulse length and pulse amplitude: 8 x 0.250 sec., 25000 V/m at 1 Hz.
 
 ```c++
   const double volt_to_dist[] = {25000};      // V/m
@@ -117,7 +116,7 @@ On the other hand, if we want to apply (HV + LV) x 3:
   const int pulse_repetitions[] = {8};        
   const int no_cycles = 1;
 ```
-Apart from treatment parameters, other variables regarding geometry, electrode shape and tissue characteristic can be found in the configuration file *par.h*. For instance:
+   Apart from treatment parameters, other variables regarding geometry, electrode shape and tissue characteristic can be found in the configuration file *par.h*. For instance:
 
 
 * Electrode:
@@ -134,9 +133,9 @@ Apart from treatment parameters, other variables regarding geometry, electrode s
   - **y_max** = 0.032
   - **z_max** = 0.017
   
-  2. After modifying the configuration file (```src/par.h```), compilation and execution can be done effortlessly typing in the linux terminal: ```./run.sh```. The complete set of options of the bash script are described in the following section. The script will create a directory named ```simulation-1``` with three subdirectories in it: ```bin```, ```data``` and ```src```, which stores the simulation executable file, the output data (Paraview-compliant or csv output files) and the source code of this particular simulation, respectively. Next time the script is executed the simulation directory will be named with the following natural number with regard to the last simulation, i.e. ```simulation-2```.
+2. After modifying the configuration file (```src/par.h```), compilation and execution can be done effortlessly typing in the linux terminal: ```./run.sh```. The complete set of options of the bash script are described in the following section. The script will create a directory named ```simulation-1``` with three subdirectories in it: ```bin```, ```data``` and ```src```, which stores the simulation executable file, the output data (Paraview-compliant or csv output files) and the source code of this particular simulation, respectively. Next time the script is executed the simulation directory will be named with the following natural number with regard to the last simulation, i.e. ```simulation-2```.
   
-  3. In ```simulation-1/data/``` folder you will find vtk and/or csv output files (depending on the selected configuration in ```src/par.h```). Output formats were selected to be compatible with the powerful visualization tool: Paraview. You can find tutorials about Paraview use in [here](https://www.paraview.org/tutorials/ "Paraview Tutorials").
+3. In ```simulation-1/data/``` folder you will find vtk and/or csv output files (depending on the selected configuration in ```src/par.h```). Output formats were selected to be compatible with the powerful visualization tool: Paraview. You can find tutorials about Paraview use in [here](https://www.paraview.org/tutorials/ "Paraview Tutorials").
   
   
 # More about the software...
