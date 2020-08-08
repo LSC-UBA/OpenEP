@@ -137,9 +137,19 @@ void save_parameters() {
             file << par::volt_to_dist[i] << ", ";
     }
     file << std::endl;  
-    /* Pulse repetitions*/
-    // file << par::pulse_repetitions << std::endl;
-    /* On time [s] */
+
+    /* Pulse repetitions*/    
+    file  << "  pulse_repetitions: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::pulse_repetitions[i] << "}";
+        else
+            file << par::pulse_repetitions[i] << ", ";
+    }
+    file << std::endl;
+
+    /* On times [s] */
     file  << "  on_pulse_times: {";
     for (int i = 0; i < par::no_elems_per_cycle; i++)
     {
@@ -148,18 +158,10 @@ void save_parameters() {
         else
             file << par::on_pulse_times[i] << ", ";
     }
-    file << std::endl;  
-    /* No. of pulses */
-    file  << "  no_pulses: " << par::no_pulses << std::endl;  
-    
-    file  << "  no_elems_per_cycle: " << par::no_elems_per_cycle << std::endl;  
+    file << std::endl;
 
-    file  << "/* - Other parameters, calculated from the above */" << std::endl;
-
-    /* Total pulse time [s] */
-    // file  << "  total_pulse_time: " << par::total_pulse_time << std::endl;  
-    /* Off pulse times [s] */
-    file  << "  off_pulse_times: {"; 
+    /* Off times [s] */
+    file  << "  off_pulse_times: {";
     for (int i = 0; i < par::no_elems_per_cycle; i++)
     {
         if(i == par::no_elems_per_cycle - 1)
@@ -167,9 +169,19 @@ void save_parameters() {
         else
             file << par::off_pulse_times[i] << ", ";
     }
-    file << std::endl;   
+    file << std::endl; 
+
+    /* No. of cycles */
+    file  << "  no_cycles: " << par::no_cycles << std::endl;      
+    
+    file  << "/* - Other parameters, calculated from the above */" << std::endl;
+
+    /* No. of pulses */
+    file  << "  no_pulses: " << par::no_pulses << std::endl;  
+    
     /* Simulation total time [s] */
     file  << "  max_time: " << par::max_time << std::endl;  
+    
     /* Maximum voltages [V] */
     file  << "  max_voltages: {"; 
     for (int i = 0; i < par::no_elems_per_cycle; i++)
@@ -180,6 +192,7 @@ void save_parameters() {
             file << par::max_voltages[i] << ", ";
     }
     file << std::endl; 
+    
     /* Potential in the anode [V] */
     file  << "  phi_anodes: {"; 
     for (int i = 0; i < par::no_elems_per_cycle; i++)
@@ -190,6 +203,7 @@ void save_parameters() {
             file << par::phi_anodes[i] << ", ";
     }
     file << std::endl; 
+    
     /* Potential in the cathode [V] */
     file  << "  phi_cathode: " << par::phi_cathode << std::endl;  
     /* Initial electric potential [V] */
@@ -283,6 +297,7 @@ void save_parameters() {
             file << par::dts_on_pulse[i] << ", ";
     }
     file << std::endl;  
+    
     /* Time step during off pulse [s] */
     file  << "  dts_off_pulse: {";
     for (int i = 0; i < par::no_elems_per_cycle; i++)

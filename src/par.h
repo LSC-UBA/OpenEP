@@ -40,7 +40,7 @@ const std::string electrode_type = "needles";
 /* Space between anode-anode and cathode-cathode. [m] */
 /* Use only with needle electrodes */
 const long double gap_elect_elect = 5e-3;
-/* Use only with needle electrodes. No. of electrodes. */
+/* Use only with needle electrodes. No. of anodes or cathodes. */
 const int no_electrodes = 1;
 
 /* ------------------------- Domain parameters ----------------------------- */
@@ -61,7 +61,7 @@ const double on_pulse_times[] = {2e-6, 0.25e-6};
 /* Off times [s] */
 const double off_pulse_times[] = {1e-6, 1e-6};
 /* How many repetitions of each pulse */
-const double pulse_repetitions[] = {1, 1};
+const int pulse_repetitions[] = {1, 1};
 /* No. of cycle repetition. A cycle is a sequence of pulses. */
 const int no_cycles = 2;
 
