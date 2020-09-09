@@ -31,7 +31,7 @@ void save(  long double curr_time, int& save_counter, ScalarField & Phi,
 }
 
 void log(   long double curr_time, int pulse, ScalarField & Temperature,
-            ScalarField & Phi, ScalarField & Sigma, VectorField & CurrentDensity,
+            ScalarField & Phi, ScalarField & Sigma, VectorField & ElectricField, VectorField & CurrentDensity,
             long double q_accum, bool & log_created )
 
 {
@@ -45,11 +45,11 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
         file    <<  "Time [s],"
                     "Pulse number,"
                     "Potential difference [V],"
-                    "Voltage to distance ratio [V/m],"
                     "Electric conductivity (middle) [S/m],"
                     "Electric current [A],"
                     "Electric charge [C],"
                     "Temperature (middle) [K],"
+                    "Electric field (middle) [V/m]"
                 << std::endl;
         log_created = true;
     }
@@ -65,15 +65,16 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
     long double electricCurrent =
                 calc_electric_current( CurrentDensity );
     long double temperature_middle = Temperature( par::ii / 2, par::jj / 2, par::kk / 2);
+    long double ef_middle = ElectricField.get_norm().get(par::ii / 2, par::jj / 2, par::kk / 2);
     
     file    << time << ", "
             << pulse << ", "
             << potential_difference << ", "
-            << par::volt_to_dist << ", "
             << electricConductivity << ", "
             << electricCurrent << ", "
             << q_accum  << ", "
             << temperature_middle << ", "
+            << ef_middle
             << std::endl;
 
     /* Close file */
@@ -127,31 +128,87 @@ void save_parameters() {
     file  << "/* -- Treatment parameters -------------------- */" << std::endl;
 
     /* Voltage to distance ratio [V m^-1] */
-    file  << "  volt_to_dist: " << par::volt_to_dist << std::endl;  
-    /* Frequency [Hz] */
-    file  << "  freq: " << par::freq << std::endl;  
-    /* On time [s] */
-    file  << "  on_pulse_time: " << par::on_pulse_time << std::endl;  
-    /* No. of pulses */
-    file  << "  nbr_pulses: " << par::nbr_pulses << std::endl;  
+    file  << "  volt_to_dist: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::volt_to_dist[i] << "}";
+        else
+            file << par::volt_to_dist[i] << ", ";
+    }
+    file << std::endl;  
 
+    /* Pulse repetitions*/    
+    file  << "  pulse_repetitions: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::pulse_repetitions[i] << "}";
+        else
+            file << par::pulse_repetitions[i] << ", ";
+    }
+    file << std::endl;
+
+    /* On times [s] */
+    file  << "  on_pulse_times: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::on_pulse_times[i] << "}";
+        else
+            file << par::on_pulse_times[i] << ", ";
+    }
+    file << std::endl;
+
+    /* Off times [s] */
+    file  << "  off_pulse_times: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::off_pulse_times[i] << "}";
+        else
+            file << par::off_pulse_times[i] << ", ";
+    }
+    file << std::endl; 
+
+    /* No. of cycles */
+    file  << "  no_cycles: " << par::no_cycles << std::endl;      
+    
     file  << "/* - Other parameters, calculated from the above */" << std::endl;
 
-    /* Total pulse time [s] */
-    file  << "  total_pulse_time: " << par::total_pulse_time << std::endl;  
-    /* Off pulse time [s] */
-    file  << "  off_pulse_time: " << par::off_pulse_time << std::endl;  
+    /* No. of pulses */
+    file  << "  no_pulses: " << par::no_pulses << std::endl;  
+    
     /* Simulation total time [s] */
     file  << "  max_time: " << par::max_time << std::endl;  
-    /* Maximum voltage [V] */
-    file  << "  max_voltage: " << par::max_voltage << std::endl;  
+    
+    /* Maximum voltages [V] */
+    file  << "  max_voltages: {"; 
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::max_voltages[i] << "}";
+        else
+            file << par::max_voltages[i] << ", ";
+    }
+    file << std::endl; 
+    
     /* Potential in the anode [V] */
-    file  << "  phi_anode: " << par::phi_anode << std::endl;  
+    file  << "  phi_anodes: {"; 
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::phi_anodes[i] << "}";
+        else
+            file << par::phi_anodes[i] << ", ";
+    }
+    file << std::endl; 
+    
     /* Potential in the cathode [V] */
     file  << "  phi_cathode: " << par::phi_cathode << std::endl;  
     /* Initial electric potential [V] */
     file  << "  phi_init: " << par::phi_init << std::endl;  
-    /* Initial electric field [V m^-1] */
+    /* Initial electric filed [V m^-1] */
     file  << "  ef_init: " << par::ef_init << std::endl;  
 
     file  << "/* -- Tissue paramters ------------------------ */" << std::endl;
@@ -231,14 +288,39 @@ void save_parameters() {
     file  << "/* -- Pulse parameters ------------------------ */" << std::endl;
 
     /* Time step during on pulse [s] */
-    file  << "  dt_on_pulse: " << par::dt_on_pulse << std::endl;  
+    file  << "  dts_on_pulse: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::dts_on_pulse[i] << "}";
+        else
+            file << par::dts_on_pulse[i] << ", ";
+    }
+    file << std::endl;  
+    
     /* Time step during off pulse [s] */
-    file  << "  dt_off_pulse: " << par::dt_off_pulse << std::endl;  
+    file  << "  dts_off_pulse: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::dts_off_pulse[i] << "}";
+        else
+            file << par::dts_off_pulse[i] << ", ";
+    }
+    file << std::endl;  
 
     file  << "/* -- Save and log parameters  ---------------- */" << std::endl;
 
     /* Save each ... iterations */
-    file  << "  save_step: " << par::save_step << std::endl;  
+    file  << "  save_steps: {";
+    for (int i = 0; i < par::no_elems_per_cycle; i++)
+    {
+        if(i == par::no_elems_per_cycle - 1)
+            file << par::save_steps[i] << "}";
+        else
+            file << par::save_steps[i] << ", ";
+    }
+    file << std::endl;  
     /* Log each ... iterations */
     file  << "  log_step: " << par::log_step << std::endl;  
     /* "vtk" or "csv" */

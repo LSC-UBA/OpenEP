@@ -15,7 +15,7 @@ void save(  long double curr_time, int& save_counter, ScalarField & Phi,
             VectorField & CurrentDensity, ScalarField & Temperature);
 
 void log(   long double curr_time, int pulse, ScalarField & Temperature,
-            ScalarField & Phi, ScalarField & Sigma, VectorField & CurrentDensity,
+            ScalarField & Phi, ScalarField & Sigma, VectorField & ElectricField, VectorField & CurrentDensity,
             long double q_accum, bool & log_created );
 
 void save_parameters();

@@ -6,7 +6,7 @@
 /* --------------------- Electrical variable calculation ------------------- */
 
 /* Calculate initial distribution of Phi */
-void init_phi(ScalarField & Phi);
+void init_phi(ScalarField & Phi, long double max_voltage);
 
 /* Calculate Phi: div( sigma grad(Phi) ) = 0 */
 void calc_nonlinear_phi( ScalarField & Phi, ScalarField & Phi_aux,
