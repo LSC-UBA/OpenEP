@@ -48,6 +48,8 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
                     "Electric conductivity (middle) [S/m],"
                     "Electric current [A],"
                     "Electric charge [C],"
+                    "Temperature (close-anode) [K],"
+                    "Temperature (quarter-anode) [K],"
                     "Temperature (middle) [K],"
                     "Electric field (middle) [V/m]"
                 << std::endl;
@@ -64,6 +66,8 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
                 Sigma( par::ii / 2, par::jj / 2, par::kk / 2);
     long double electricCurrent =
                 calc_electric_current( CurrentDensity );
+    long double temperature_close_anode = Temperature( par::anodes[0][0] + 1, par::jj / 2, par::kk / 2);
+    long double temperature_quarter_anode = Temperature( (par::anodes[0][0] + par::ii / 2 ) /2, par::jj / 2, par::kk / 2);
     long double temperature_middle = Temperature( par::ii / 2, par::jj / 2, par::kk / 2);
     long double ef_middle = ElectricField.get_norm().get(par::ii / 2, par::jj / 2, par::kk / 2);
     
@@ -73,6 +77,8 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
             << electricConductivity << ", "
             << electricCurrent << ", "
             << q_accum  << ", "
+            << temperature_close_anode << ", "
+            << temperature_quarter_anode << ", "
             << temperature_middle << ", "
             << ef_middle
             << std::endl;
