@@ -30,7 +30,7 @@ LDFLAGS_O3_OMP= -fopenmp
 
 COMP_TYPE=FAST_OMP
 
-CFLAGS  = ${CFLAGS_${COMP_TYPE}}
+CFLAGS  = ${CFLAGS_${COMP_TYPE}} --std=c++17
 LDFLAGS = ${LDFLAGS_${COMP_TYPE}}
 
 SOURCES=mesh.cpp scalar_field.cpp vector_field.cpp electrics_calc.cpp temp_calc.cpp save.cpp main.cpp

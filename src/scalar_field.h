@@ -27,6 +27,8 @@ public:
     ScalarField();
 
     ScalarField(const Mesh &mesh0);
+    
+    ScalarField(const ScalarField& s0);
 
     ScalarField(const Mesh &mesh0, long double val);
     

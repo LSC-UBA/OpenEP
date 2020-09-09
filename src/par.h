@@ -2,6 +2,7 @@
 #define PAR_H_
 
 #include "mesh.h"
+#include "scalar_field.h"
 #include "vector_field.h"
 
 /* ---------- Here you will find the parameters of the simulation ---------- */
@@ -21,49 +22,51 @@ int * calc_save_steps();
 /* ----------------------- Universal constants ----------------------------- */
 
 /* Tissue temperature [K] */
-const long double temp = 298.15;
+const long double temp = 310.15;
 /* Air temperature. [K] */
 const long double temp_air = 298.15;                                    
 
 /* ---------------------------- Electrodes ---------------------------------- */
 
 /* Electrode length [m] */
-const long double electrode_length = 14e-3;
+const long double electrode_length = 7e-3;
 /* Electrode width [m] */
-const long double electrode_width = 1.29e-3;
+const long double electrode_width = 0.7e-3;
 /* Electrode thickness [m] */
-const long double electrode_thickness = 1.29e-3;
+const long double electrode_thickness = 0.7e-3;
 /* Space between anode-cathode, horizontally [m] */
-const long double gap_anode_cathode = 3e-3;
+const long double gap_anode_cathode = 8e-3;
 /* Type of electrode: "plates" or "needles" */
 const std::string electrode_type = "needles";
 /* Space between anode-anode and cathode-cathode. [m] */
 /* Use only with needle electrodes */
 const long double gap_elect_elect = 5e-3;
-/* Use only with needle electrodes. No. of anodes or cathodes. */
+/* Use only with needle electrodes. No. of electrodes. */
 const int no_electrodes = 1;
 
 /* ------------------------- Domain parameters ----------------------------- */
 
 /* Maximum length of the x axis [m] */
-const long double x_max = 18e-3;
+const long double x_max = 32e-3;
 /* Maximum length of the y axis [m] */
-const long double y_max = 18e-3;
+const long double y_max = 32e-3;
 /* Maximum length of the z axis [m] */
-const long double z_max = 15e-3;
+const long double z_max = 17e-3;
 
 /* ----------------------- Treatment parameters ---------------------------- */
 
 /* Voltages to distance ratio [V m^-1] */
-const double volt_to_dist[] = {300000, -300000};
+const double volt_to_dist[] = {25000};
 /* On times [s] */
-const double on_pulse_times[] = {2e-6, 0.25e-6};
+const double on_pulse_times[] = {0.05};
 /* Off times [s] */
-const double off_pulse_times[] = {1e-6, 1e-6};
+const double off_pulse_times[] = {0.950};
 /* How many repetitions of each pulse */
-const int pulse_repetitions[] = {1, 1};
+const int pulse_repetitions[] = {8};
 /* No. of cycle repetition. A cycle is a sequence of pulses. */
-const int no_cycles = 2;
+const int no_cycles = 1;
+
+
 
 /* ----------- Other parameters, calculated from the above ----------------- */
 
@@ -84,14 +87,14 @@ const long double phi_init = 0.;
 /* Initial electric field [V m^-1] */
 const long double ef_init = 0.;
 
-//* -------------------------- Tissue parameters ------------------------------ */
+/* -------------------------- Tissue paramters ------------------------------ */
 
 /* Initial temperature [K] */
 const long double temperature_init = temp;
 /* Thermal conductivity [ W m^-1 K^-1 ] */
 const long double k_domain_init = 0.512;
 /* Electrical conductivity [ S m^-1 ] */
-const long double sigma_domain_init = 0.53;
+const long double sigma_domain_init = 0.504;
 /* Tissue density [ kg m^3 ] */
 const long double rho = 1050.;
 /* Heat capacity [J kg^-1 K^-1] */
@@ -102,20 +105,20 @@ const long double qm = 420.;
 /* --------------------------- Blood parameters ------------------------------ */
 
 /* Temperature of the arterial blood [K] */
-const long double temperature_b = 0;
+const long double temperature_b = 310.15;
 /* Density of the blood [ kg m^3 ] */
-const long double rho_b = 0;
+const long double rho_b = 1060;
 /* Heat capacity of the blood [J kg^-1 K^-1] */
-const long double c_b = 0;
+const long double c_b = 3600;
 /* Blood profusion [ s^-1 ] */
-const long double w_b = 0;
+const long double w_b = 0.0044;
 
 /* -------------------------- Electrode parameters --------------------------- */
 
 /* Thermal conductivity [ W m^-1 K^-1 ] */
 const long double k_electrode_init = 16.3;
 /* Electrical conductivity [ S m^-1 ] */
-const long double sigma_electrode_init = 2.22e6;
+const long double sigma_electrode_init = 1.398e6;
 /* Electrode density [ kg m^-3 ] */
 const long double rho_electrode = 1050.;
 /* Heat capacity [J kg^-1 K^-1] */                             
@@ -131,7 +134,7 @@ const long double alpha0 = 0.015;
 /* ----------------------- Geometry and Mesh Parameters ----------------------- */
 
 /* No. of nodes between anodes and cathodes */
-const int resolution = 15; 
+const int resolution = 35;                                              
 /* Mesh */
 const Mesh mesh(    x_max, y_max, z_max, electrode_length, electrode_width,
                     electrode_thickness, gap_anode_cathode, gap_elect_elect,
@@ -159,18 +162,18 @@ const long double dz = mesh.get_dz();
 const double tol = 1.e-9;
 /* Max. sub iteration number for Phi */
 const int max_sub_it_Phi = 50;
-/* Max. sub iteration number for initial condition of Phi */
-const int max_sub_it_init_Phi = 25000;
+/* Max. sub iteration number for intial condition of Phi */
+const int max_sub_it_init_Phi = 1000;
 /* Relaxation */
 const long double omega =  1.;
 
 /* ----------------------------- Pulse parameters ----------------------------- */
 
 /* Time step during on pulse [s] */
-const long double dt_fractions_on = 500.;
+const long double dt_fractions_on = 5e6;
 inline const long double * dts_on_pulse =  calc_dts_on(dt_fractions_on);
 /* Time step during off pulse [s] */
-const long double dt_fractions_off = 250.;
+const long double dt_fractions_off = 5e6;
 inline const long double * dts_off_pulse = calc_dts_off(dt_fractions_off);
 
 /* -------------------------- Save and log parameters  ------------------------ */
@@ -181,7 +184,6 @@ inline const int * save_steps = calc_save_steps();
 const int log_step = 50;
 /* "vtk" or "csv" */
 const std::string save_format = "vtk";
-
 
 /* -------------------------- Calculation of some parameters  ------------------------ */
 
@@ -248,6 +250,8 @@ inline int * calc_save_steps()
 	}	
 	return (int *) save_steps;
 }
+
+
 
 }
 

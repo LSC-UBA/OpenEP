@@ -77,6 +77,10 @@ ScalarField::ScalarField()
     n = 0;
 }
 
+ScalarField::ScalarField(const ScalarField& s0) {
+    *this = s0;
+}
+
 ScalarField::ScalarField(const Mesh &mesh0)
 {
     mesh = &mesh0;

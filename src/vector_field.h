@@ -21,6 +21,8 @@ public:
 
     VectorField(const Mesh &mesh0);
 
+    VectorField(const VectorField& v0);
+
     VectorField(const Mesh &mesh0, long double val);
 
     VectorField(const Mesh &mesh0, const ScalarField & vx, const ScalarField & vy, const ScalarField & vz);

@@ -82,6 +82,10 @@ VectorField::VectorField(const Mesh &mesh0)
     scalar_component[2].init(mesh0, 0.);
 }
 
+VectorField::VectorField(const VectorField& v0){
+    *this = v0;
+}
+
 VectorField::VectorField(const Mesh &mesh0, long double val)
 {
     mesh = &mesh0;
