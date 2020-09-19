@@ -66,9 +66,9 @@ void log(   long double curr_time, int pulse, ScalarField & Temperature,
                 Sigma( par::ii / 2, par::jj / 2, par::kk / 2);
     long double electricCurrent =
                 calc_electric_current( CurrentDensity );
-    long double temperature_close_anode = Temperature( par::anodes[0][0] + 1, par::jj / 2, par::kk / 2);
-    long double temperature_quarter_anode = Temperature( (par::anodes[0][0] + par::ii / 2 ) /2, par::jj / 2, par::kk / 2);
-    long double temperature_middle = Temperature( par::ii / 2, par::jj / 2, par::kk / 2);
+    long double temperature_close_anode = Temperature( par::anodes[0][0] + 1, par::jj / 2, par::kk / 4);
+    long double temperature_quarter_anode = Temperature( (par::anodes[0][0] + par::ii / 2 ) /2, par::jj / 2, par::kk / 4);
+    long double temperature_middle = Temperature( par::ii / 2, par::jj / 2, par::kk / 4);
     long double ef_middle = ElectricField.get_norm().get(par::ii / 2, par::jj / 2, par::kk / 2);
     
     file    << time << ", "
