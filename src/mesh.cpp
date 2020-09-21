@@ -47,9 +47,9 @@ Mesh::Mesh( long double x_max0, long double y_max0, long double z_max0,
     kk = int( z_max / dz );
 
     /*  No. of elect. nodes in z-axis */
-    int nodes_long = electrode_length / dz + 1; 
-    int nodes_width = electrode_width / dy;
-    int nodes_thickness = electrode_thickness / dx;
+    int nodes_long = round(electrode_length / dz + 1); 
+    int nodes_width = round(electrode_width / dy);
+    int nodes_thickness = round(electrode_thickness / dx);
 
     anode_number = nodes_width * nodes_long * nodes_thickness * no_electrodes; 
     cathode_number = nodes_width * nodes_long * nodes_thickness * no_electrodes;
