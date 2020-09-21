@@ -31,7 +31,7 @@ const long double temp_air = 298.15;
 /* Electrode length [m] */
 const long double electrode_length = 7e-3;
 /* Electrode width [m] */
-const long double electrode_width = 0.7e-3;
+const long double electrode_width = 0.8e-3;
 /* Electrode thickness [m] */
 const long double electrode_thickness = 0.7e-3;
 /* Space between anode-cathode, horizontally [m] */
@@ -47,11 +47,11 @@ const int no_electrodes = 1;
 /* ------------------------- Domain parameters ----------------------------- */
 
 /* Maximum length of the x axis [m] */
-const long double x_max = 32e-3;
+const long double x_max = 15e-3;
 /* Maximum length of the y axis [m] */
-const long double y_max = 32e-3;
+const long double y_max = 15e-3;
 /* Maximum length of the z axis [m] */
-const long double z_max = 17e-3;
+const long double z_max = 10e-3;
 
 /* ----------------------- Treatment parameters ---------------------------- */
 
@@ -134,7 +134,7 @@ const long double alpha0 = 0.015;
 /* ----------------------- Geometry and Mesh Parameters ----------------------- */
 
 /* No. of nodes between anodes and cathodes */
-const int resolution = 35;                                              
+const int resolution = 34;                                              
 /* Mesh */
 const Mesh mesh(    x_max, y_max, z_max, electrode_length, electrode_width,
                     electrode_thickness, gap_anode_cathode, gap_elect_elect,
@@ -170,10 +170,10 @@ const long double omega =  1.;
 /* ----------------------------- Pulse parameters ----------------------------- */
 
 /* Time step during on pulse [s] */
-const long double dt_fractions_on = 5e6;
+const long double dt_fractions_on = 5000;
 inline const long double * dts_on_pulse =  calc_dts_on(dt_fractions_on);
 /* Time step during off pulse [s] */
-const long double dt_fractions_off = 5e6;
+const long double dt_fractions_off = 5000;
 inline const long double * dts_off_pulse = calc_dts_off(dt_fractions_off);
 
 /* -------------------------- Save and log parameters  ------------------------ */
