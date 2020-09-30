@@ -31,9 +31,9 @@ const long double temp_air = 298.15;
 /* Electrode length [m] */
 const long double electrode_length = 7e-3;
 /* Electrode width [m] */
-const long double electrode_width = 0.7e-3;
+const long double electrode_width = 0.35e-3;
 /* Electrode thickness [m] */
-const long double electrode_thickness = 0.7e-3;
+const long double electrode_thickness = 0.35e-3;
 /* Space between anode-cathode, horizontally [m] */
 const long double gap_anode_cathode = 8e-3;
 /* Type of electrode: "plates" or "needles" */
@@ -170,10 +170,10 @@ const long double omega =  1.;
 /* ----------------------------- Pulse parameters ----------------------------- */
 
 /* Time step during on pulse [s] */
-const long double dt_fractions_on = 5000;
+const long double dt_fractions_on = 7500;
 inline const long double * dts_on_pulse =  calc_dts_on(dt_fractions_on);
 /* Time step during off pulse [s] */
-const long double dt_fractions_off = 5000;
+const long double dt_fractions_off = 7500;
 inline const long double * dts_off_pulse = calc_dts_off(dt_fractions_off);
 
 /* -------------------------- Save and log parameters  ------------------------ */

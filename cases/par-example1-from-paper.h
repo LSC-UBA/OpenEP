@@ -31,9 +31,9 @@ const long double temp_air = 298.15;
 /* Electrode length [m] */
 const long double electrode_length = 7e-3;
 /* Electrode width [m] */
-const long double electrode_width = 0.8e-3;
+const long double electrode_width = 0.35e-3;
 /* Electrode thickness [m] */
-const long double electrode_thickness = 0.7e-3;
+const long double electrode_thickness = 0.35e-3;
 /* Space between anode-cathode, horizontally [m] */
 const long double gap_anode_cathode = 8e-3;
 /* Type of electrode: "plates" or "needles" */
@@ -170,10 +170,10 @@ const long double omega =  1.;
 /* ----------------------------- Pulse parameters ----------------------------- */
 
 /* Time step during on pulse [s] */
-const long double dt_fractions_on = 5000;
+const long double dt_fractions_on = 7500;
 inline const long double * dts_on_pulse =  calc_dts_on(dt_fractions_on);
 /* Time step during off pulse [s] */
-const long double dt_fractions_off = 5000;
+const long double dt_fractions_off = 7500;
 inline const long double * dts_off_pulse = calc_dts_off(dt_fractions_off);
 
 /* -------------------------- Save and log parameters  ------------------------ */
@@ -189,66 +189,66 @@ const std::string save_format = "vtk";
 
 inline int calc_no_pulses()
 {
-	int n_repetitions = sizeof(pulse_repetitions) / sizeof(pulse_repetitions[0]);
-	int sum_repetitions = 0;
-	for (int i = 0; i < n_repetitions; i++) 
-	{
-		sum_repetitions += pulse_repetitions[i]; 
-	}
-	return sum_repetitions * no_cycles;
+    int n_repetitions = sizeof(pulse_repetitions) / sizeof(pulse_repetitions[0]);
+    int sum_repetitions = 0;
+    for (int i = 0; i < n_repetitions; i++) 
+    {
+        sum_repetitions += pulse_repetitions[i]; 
+    }
+    return sum_repetitions * no_cycles;
 }
 
 inline long double calc_max_time()
 {
-	double parcial_time = 0;
-	for (int i = 0; i < no_elems_per_cycle; i++)
-	{
-		parcial_time += (on_pulse_times[i] + off_pulse_times[i]) * pulse_repetitions[i];
-	}
+    double parcial_time = 0;
+    for (int i = 0; i < no_elems_per_cycle; i++)
+    {
+        parcial_time += (on_pulse_times[i] + off_pulse_times[i]) * pulse_repetitions[i];
+    }
 
-	return  parcial_time * no_cycles;
+    return  parcial_time * no_cycles;
 }
 
 inline long double * calc_max_voltages()
 {
-	long double * max_voltages = new long double[no_elems_per_cycle];
-	for (int i = 0; i < no_elems_per_cycle; i++)
-	{
-		max_voltages[i] = volt_to_dist[i] * gap_anode_cathode;
-	}	
-	return (long double *) max_voltages;
+    long double * max_voltages = new long double[no_elems_per_cycle];
+    for (int i = 0; i < no_elems_per_cycle; i++)
+    {
+        max_voltages[i] = volt_to_dist[i] * gap_anode_cathode;
+    }    
+    return (long double *) max_voltages;
 }
 
 inline long double * calc_dts_on(int dt_fractions)
 {
-	long double * dts_on = new long double[no_elems_per_cycle];
-	for (int i = 0; i < no_elems_per_cycle; i++)
-	{
-		dts_on[i] = on_pulse_times[i] / dt_fractions;
-	}	
-	return (long double *) dts_on;
+    long double * dts_on = new long double[no_elems_per_cycle];
+    for (int i = 0; i < no_elems_per_cycle; i++)
+    {
+        dts_on[i] = on_pulse_times[i] / dt_fractions;
+    }    
+    return (long double *) dts_on;
 
 }
 
 inline long double * calc_dts_off(int dt_fractions)
 {
-	long double * dts_off = new long double[no_elems_per_cycle];
-	for (int i = 0; i < no_elems_per_cycle; i++)
-	{
-		dts_off[i] = off_pulse_times[i] / dt_fractions;
-	}	
-	return (long double *) dts_off;
+    long double * dts_off = new long double[no_elems_per_cycle];
+    for (int i = 0; i < no_elems_per_cycle; i++)
+    {
+        dts_off[i] = off_pulse_times[i] / dt_fractions;
+    }    
+    return (long double *) dts_off;
 
 }
 
 inline int * calc_save_steps()
 {
-	int * save_steps = new int[no_elems_per_cycle];	
-	for (int i = 0; i < no_elems_per_cycle; i++)
-	{
-		save_steps[i] = 1. / dts_on_pulse[i];
-	}	
-	return (int *) save_steps;
+    int * save_steps = new int[no_elems_per_cycle];    
+    for (int i = 0; i < no_elems_per_cycle; i++)
+    {
+        save_steps[i] = 1. / dts_on_pulse[i];
+    }    
+    return (int *) save_steps;
 }
 
 
