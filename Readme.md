@@ -18,7 +18,7 @@ If you like OpenEP, please consider starring [link](https://github.com/LSC-UBA/O
 
 This code was explicitly used in the following scientific publications:
 
-- (Under review) "OpenEP: an open source electrical-thermal simulator for electroporation-based treatments". Scientific Reports, Nature. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019.
+- "OpenEP: an open-source simulator for electroporation-based tumor treatments". Scientific Reports, Nature. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019.
 - "Towards an optimal dose-response relationship in gene electrotransfer protocols". Electrochimica Acta. E. Luján, M. Marino, N. Olaiz, G. Marshall. 2019.
 
 This code implements the standard electroporation model used in scientific publications such as:
