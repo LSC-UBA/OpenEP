@@ -18,14 +18,16 @@ If you like OpenEP, please consider starring [link](https://github.com/LSC-UBA/O
 
 This code was explicitly used in the following scientific publications:
 
-- "OpenEP: an open-source simulator for electroporation-based tumor treatments". Scientific Reports, Nature. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019.
-- "Towards an optimal dose-response relationship in gene electrotransfer protocols". Electrochimica Acta. E. Luján, M. Marino, N. Olaiz, G. Marshall. 2019.
+- "OpenEP: an open-source simulator for electroporation-based tumor treatments". Scientific Reports, Nature. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019. [Link](https://doi.org/10.1038/s41598-020-79858-y).
+- "Towards an optimal dose-response relationship in gene electrotransfer protocols". Electrochimica Acta. E. Luján, M. Marino, N. Olaiz, G. Marshall. 2019. [Link](https://doi.org/10.1016/j.electacta.2019.07.029)
+- "Predicting the electroporated tissue area trajectory in Electroporation-based protocol optimization". Authors: Guillermo Marshall, Alejandro Soba. 2025. Article under review. [Link](https://drive.google.com/file/d/1u_sHzuvkYNJJX9hwPg4Fv4mAN12ixkkw/view?usp=sharing).
 
 This code implements the standard electroporation model used in scientific publications such as:
 
-- "The Role of Additional Pulses in Electropermeabilization Protocols". Authors: C. Suárez, A. Soba, F. Maglietti, N. Olaiz, G. Marshall. 2014.
-- "A Three-Dimensional In Vitro Tumor Platform for Modeling Therapeutic Irreversible Electroporation". Authors: C. B. Arena, C. S. Szot, P. A. Garcia, M. N. Rylander and R. V. Davalos. 2012.
-- "Three-dimensional Finite-element Analysis of Joule Heating in Electrochemotherapy and in vivo Gene Electrotransfer". Authors: Igor Lacković, Ratko Magjarević and Damijan Miklavčič. 2009.
+- "The Role of Additional Pulses in Electropermeabilization Protocols". Authors: C. Suárez, A. Soba, F. Maglietti, N. Olaiz, G. Marshall. 2014. [Link](https://doi.org/10.1371/journal.pone.0113413).
+- "A Three-Dimensional In Vitro Tumor Platform for Modeling Therapeutic Irreversible Electroporation". Authors: C. B. Arena, C. S. Szot, P. A. Garcia, M. N. Rylander and R. V. Davalos. 2012. [Link](https://doi.org/10.1016/j.bpj.2012.09.017).
+- "Three-dimensional Finite-element Analysis of Joule Heating in Electrochemotherapy and in vivo Gene Electrotransfer". Authors: Igor Lacković, Ratko Magjarević and Damijan Miklavčič. 2009. [Link](https://doi.org/10.1109/TDEI.2009.5293947).
+
 
 # Features
 
