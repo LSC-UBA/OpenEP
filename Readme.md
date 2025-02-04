@@ -20,7 +20,7 @@ This code was explicitly used in the following scientific publications:
 
 - "OpenEP: an open-source simulator for electroporation-based tumor treatments". Scientific Reports, Nature. Authors: M. Marino, E. Luján, E. Mocskos, G. Marshall. 2019. [Link](https://doi.org/10.1038/s41598-020-79858-y).
 - "Towards an optimal dose-response relationship in gene electrotransfer protocols". Electrochimica Acta. E. Luján, M. Marino, N. Olaiz, G. Marshall. 2019. [Link](https://doi.org/10.1016/j.electacta.2019.07.029)
-- "Predicting the electroporated tissue area trajectory in Electroporation-based protocol optimization". Authors: Guillermo Marshall, Alejandro Soba. 2025. Article under review. [Link](https://drive.google.com/file/d/1u_sHzuvkYNJJX9hwPg4Fv4mAN12ixkkw/view?usp=sharing).
+- "Optimizing Electroporation-based Protocols: Pulse Number and Minimization of pH-Induced Damage". Authors: Guillermo Marshall, Alejandro Soba. 2025. Article under review. [Link](https://drive.google.com/file/d/1u_sHzuvkYNJJX9hwPg4Fv4mAN12ixkkw/view?usp=sharing).
 
 This code implements the standard electroporation model used in scientific publications such as:
 
